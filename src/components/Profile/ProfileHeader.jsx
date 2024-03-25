@@ -5,6 +5,7 @@ import {
   Flex,
   Text,
   VStack,
+  useColorMode,
   useDisclosure,
 } from "@chakra-ui/react";
 import useUserProfileStore from "../../store/userProfileStore";
@@ -13,6 +14,7 @@ import EditProfile from "./EditProfile";
 import useFollowUser from "../../hooks/useFollowUser";
 
 const ProfileHeader = () => {
+  const { colorMode } = useColorMode();
   const { userProfile } = useUserProfileStore();
   const authUser = useAuthStore((state) => state.user);
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -53,8 +55,8 @@ const ProfileHeader = () => {
           {visitingOwnProfileAndAuth && (
             <Flex gap={4} alignItems={"center"} justifyContent={"center"}>
               <Button
-                bg={"white"}
-                color={"black"}
+                bg={colorMode === "light" ? "rgb(239,239,239)" : "rgb(54,54,54)"}
+                color={colorMode === "light" ? "black" : "white"}
                 _hover={{ bg: "whiteAlpha.800" }}
                 size={{ base: "xs", md: "sm" }}
                 onClick={onOpen}

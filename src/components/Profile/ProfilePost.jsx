@@ -12,6 +12,7 @@ import {
   ModalOverlay,
   Text,
   VStack,
+  useColorMode,
   useDisclosure,
 } from "@chakra-ui/react";
 import { AiFillHeart } from "react-icons/ai";
@@ -31,6 +32,7 @@ import Caption from "../Comment/Caption";
 
 const ProfilePost = ({ post }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { colorMode } = useColorMode();
   const userProfile = useUserProfileStore((state) => state.userProfile);
   const authUser = useAuthStore((state) => state.user);
   const showToast = useShowToast();
@@ -119,7 +121,7 @@ const ProfilePost = ({ post }) => {
         <ModalOverlay />
         <ModalContent>
           <ModalCloseButton />
-          <ModalBody bg={"black"} pb={5}>
+          <ModalBody bg={colorMode === 'light' ? "white" : "black"} pb={5}>
             <Flex
               gap={4}
               w={{ base: "90%", sm: "70%", md: "full" }}

@@ -1,7 +1,7 @@
 import { Box, Link, Tooltip } from "@chakra-ui/react"
 import { Link as RouterLink } from 'react-router-dom';
 import { AiFillHome } from 'react-icons/ai';
-const Home = () => {
+const Home = ({colorMode}) => {
   return (
     <Tooltip
               hasArrow
@@ -17,12 +17,15 @@ const Home = () => {
                 as={RouterLink}
                 alignItems={"center"}
                 gap={4}
-                _hover={{ bg: "whiteAlpha.400" }}
+                _hover={{  bg: colorMode === "light" ? "rgba(0, 0, 0, .05)" : "whiteAlpha.400"}}
                 borderRadius={6}
-                p={2}
+                p={3}
                 w={{ base: 10, md: "full" }}
                 justifyContent={{ base: "center", md: "flex-start" }}
-              >
+                height={'48px'}
+                marginY={'2px'}
+                
+             >
                <AiFillHome size={25}/>
                 <Box display={{ base: "none", md: "block" }}>Home</Box>
               </Link>
@@ -30,4 +33,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Home;

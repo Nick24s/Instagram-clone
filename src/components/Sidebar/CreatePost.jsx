@@ -35,7 +35,7 @@ import {
 import { firestore, storage } from "../../firebase/firebase";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 
-const CreatePost = () => {
+const CreatePost = ({colorMode}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [caption, setCaption] = useState("");
   const imageRef = useRef(null);
@@ -67,14 +67,15 @@ const CreatePost = () => {
         <Flex
           alignItems={"center"}
           gap={4}
-          _hover={{ bg: "whiteAlpha.400" }}
+        _hover={{  bg: colorMode === "light" ? "rgba(0, 0, 0, .05)" : "whiteAlpha.400"}}
           borderRadius={6}
-          p={2}
+          p={3}
           w={{ base: 10, md: "full" }}
           justifyContent={{ base: "center", md: "flex-start" }}
+          marginY={'2px'}
           onClick={onOpen}
         >
-          <CreatePostLogo />
+          <CreatePostLogo colorMode={colorMode}/>
           <Box display={{ base: "none", md: "block" }}>Create</Box>
         </Flex>
       </Tooltip>
@@ -82,7 +83,7 @@ const CreatePost = () => {
       <Modal isOpen={isOpen} onClose={onClose} size="xl">
         <ModalOverlay />
 
-        <ModalContent bg={"black"} border={"1px solid gray"}>
+        <ModalContent bg={colorMode === "light" ? "white" : 'rgb(38,39,39)'} border={"1px solid gray"}>
           <ModalHeader>Create Post</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>

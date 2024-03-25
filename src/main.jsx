@@ -7,6 +7,7 @@ import { extendTheme } from '@chakra-ui/react';
 import { mode } from '@chakra-ui/theme-tools';
 import { BrowserRouter } from 'react-router-dom';
 
+
 const styles = {
 global : (props) => ({
   body : {
@@ -16,14 +17,17 @@ global : (props) => ({
 })
 }
 const config = {
-  initialColorMode: 'dark',
+  initialColorMode: 'light',
   useSystemColorMode: false,
 }
 
 // 3. extend the theme
-const theme = extendTheme({ config , styles})
-// const theme = extendTheme({ config })
+const theme = extendTheme({ config,
+   styles 
+  })
 
+
+console.log("theme :" ,theme);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

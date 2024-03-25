@@ -4,13 +4,14 @@ import useSearchUser from "../../hooks/useSearchUser";
 import { useRef } from "react";
 import  SuggestedUser  from '../SuggestedUsers/SuggestedUser';
 
-const Search = () => {
+const Search = ({colorMode}) => {
     const {isOpen, onOpen, onClose} = useDisclosure();
     const {user,isLoading, getUserProfile,setUser } = useSearchUser();
     const searchRef = useRef(null);
     const handleSearchUser = (e) => {
         e.preventDefault();
         getUserProfile(searchRef.current.value);
+        
     };
 	return (
 		<>
@@ -25,22 +26,23 @@ const Search = () => {
 				<Flex
 					alignItems={"center"}
 					gap={4}
-					_hover={{ bg: "whiteAlpha.400" }}
+					_hover={{  bg: colorMode === "light" ? "rgba(0, 0, 0, .05)" : "whiteAlpha.400"}}
 					borderRadius={6}
-					p={2}
+					p={3}
 					w={{ base: 10, md: "full" }}
 					justifyContent={{ base: "center", md: "flex-start" }}
+                    marginY={'2px'}
                     onClick={onOpen}
 
 				>
-					<SearchLogo />
+					<SearchLogo colorMode={colorMode}/>
 					<Box display={{ base: "none", md: "block" }}>Search</Box>
 				</Flex>
 			</Tooltip>
 
             <Modal isOpen={isOpen} onClose={onClose} motionPreset="slideInLeft">
             <ModalOverlay/>
-            <ModalContent bg={'black'} border={'1px solid gray'} maxW={'400px'}>
+            <ModalContent bg={  colorMode === 'light' ? 'white' : "black"} border={'1px solid gray'} maxW={'400px'}>
                 <ModalHeader>Search user</ModalHeader>
                 <ModalCloseButton/>
                 <ModalBody pb={6}>
@@ -50,7 +52,7 @@ const Search = () => {
                             <Input placeholder="Search" ref={searchRef}/>
                         </FormControl>
                         <Flex w={'full'} justifyContent={'flex-end'}>
-                            <Button type="submit" ml={'auto'} size={'sm'} my={4} isLoading={isLoading}>
+                            <Button type="submit" ml={'auto'} size={'sm'} my={4} isLoading={isLoading} bg={colorMode === 'light' ? 'rgb(237,242,247)' : 'gray'}>
                                 Search
                             </Button>
                         </Flex>
