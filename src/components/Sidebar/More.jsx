@@ -1,6 +1,17 @@
-import { useState } from "react";
+import {  useState } from "react";
 
-import { Box, Button, Divider, Flex, Popover, PopoverBody, PopoverContent, PopoverTrigger, Text, useColorMode } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Divider,
+  Flex,
+  Popover,
+  PopoverBody,
+  PopoverContent,
+  PopoverTrigger,
+  Text,
+  useColorMode,
+} from "@chakra-ui/react";
 
 import { GiHamburgerMenu } from "react-icons/gi";
 import { LuSunMedium } from "react-icons/lu";
@@ -10,171 +21,202 @@ import { IoIosArrowBack } from "react-icons/io";
 import useLogout from "../../hooks/useLogout";
 import CustomSwitch from "./customSwitch";
 
-const More = () => {
+const More = ({isOpen}) => {
+  const { colorMode, toggleColorMode } = useColorMode();
+  const { handleLogout, isLoggingOut } = useLogout();
+  const [isHovered, setIsHovered] = useState(false);
+  const [showSwitchAppearance, toggleSwitchAppearance] = useState(false);
 
-const { colorMode, toggleColorMode } = useColorMode();
-const { handleLogout, isLoggingOut } = useLogout();
-
-const [showSwitchAppearance, toggleSwitchAppearance] = useState(false);
-
-    return (
-        <Popover autoFocus={false}  placement="top-start" >
-        <PopoverTrigger>
-          <Flex
-          height={'48px'}
-            padding={3}
-            marginY={'2px'}
-            alignItems="center"
-            mt={"auto"}
-            cursor={"pointer"}
-            _hover={{
-              bg: "whiteAlpha.400",
-            }}
-            borderRadius={6}
-       
-          >
-            <GiHamburgerMenu size={25} />
-            <Text ml={2}>More</Text>
-          </Flex>
-        </PopoverTrigger>
-        <PopoverContent
-          borderColor={
-            colorMode === "light" ? "rgb(255,254,254)" : "rgb(39,39,38)"
-          }
-          w={250}
-          borderRadius={"20px"}
-          boxShadow={
-            "0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23)"
-          }
+  return (
+    // TODO FIX when screen is smaller the popover body hovers sidebar icons , the icons are visible and clickable though opened popover
+    <Popover
+      autoFocus={true}
+      placement="top-start"
+      openDelay={500}
+      closeOnBlur={true}
+      closeOnEsc={true}
+    >
+      <PopoverTrigger>
+        <Flex  zIndex={11}
+          height={"48px"}
+          padding={3}
+          marginY={"2px"}
+          alignItems="center"
+          mt={"auto"}
+          cursor={"pointer"}
+          _hover={{
+            bg: "whiteAlpha.400",
+          }}
+          borderRadius={6}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          w={{ base: 10,    md: isOpen ? "48px" : "full" }}
         >
-          {!showSwitchAppearance ? (
-            <Box borderRadius={"20px"} overflow="hidden">
-              <PopoverBody
-                bg={
-                  colorMode === "light" ? "rgb(255,254,254)" : "rgb(39,39,38)"
-                }
+           <Box height={"24px"} width={"24px"}>
+          <GiHamburgerMenu size={isHovered ? 26 : 25} />
+           </Box>
+          <Text ml={2} display={{ base: "none", md: isOpen ? 'none' : "block" }}>More</Text>
+        </Flex>
+      </PopoverTrigger>
+      <PopoverContent
+       zIndex={12}
+        borderColor={
+          colorMode === "light" ? "rgb(255,254,254)" : "rgb(39,39,38)"
+        }
+        w={250}
+        borderRadius={"20px"}
+        boxShadow={
+          "0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23)"
+        }
+     
+       
+      >
+        {!showSwitchAppearance ? (
+          <Box borderRadius={"20px"} overflow="hidden">
+            <PopoverBody 
+              bg={colorMode === "light" ? "rgb(255,254,254)" : "rgb(39,39,38)"}
+            >
+              <Flex
+                flexDir={"column"}
+                alignItems={"flex-start"}
+                gap={4}
+                p={2}
+                w={{ base: 10, md: "full" }}
+                mt={"auto"}
+                justifyContent={{ base: "flex-start", md: "flex-start" }}
               >
                 <Flex
-                  flexDir={"column"}
-                  alignItems={"flex-start"}
-                  gap={4}
-                  p={2}
-                  w={{ base: 10, md: "full" }}
-                  mt={"auto"}
-                  justifyContent={{ base: "flex-start", md: "flex-start" }}
+                  paddingLeft={"16px"}
+                  _hover={{ bg: "whiteAlpha.400" }}
+                  borderRadius={6}
+                  justifyContent="flex-start"
+                  alignItems="center"
+                  width="110%"
+                  height="50px"
+                  marginLeft="-5%"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleSwitchAppearance(true);
+                  }}
                 >
-                  
+                  {colorMode === "light" ? (
+                    <LuSunMedium size={25} strokeWidth="1.5" />
+                  ) : (
+                    <FiMoon
+                      size={25}
+                      strokeWidth="1.5"
+                      style={{ transform: "rotate(-90deg)" }}
+                    />
+                  )}
+
+                  <Button
+                    display={{ base: "none", md: "block" }}
+                    variant={"ghost"}
+                    _hover={{ bg: "transparent" }}
+                    fontWeight={"5"}
+                  >
+                    Switch appearance
+                  </Button>
+                </Flex>
+                <Divider
+                  borderWidth={"6px"}
+                  width={"116%"}
+                  marginLeft={"-10%"}
+                />
+                <Flex
+                  _hover={{ bg: "whiteAlpha.400" }}
+                  borderRadius={6}
+                  justifyContent="flex-start"
+                  alignItems="center"
+                  width="110%"
+                  height="50px"
+                  marginLeft="-5%"
+                  onClick={handleLogout}
+                >
+                  <Button
+                    display={{ base: "none", md: "block" }}
+                    variant={"ghost"}
+                    _hover={{ bg: "transparent" }}
+                    isLoading={isLoggingOut}
+                    fontWeight={"5"}
+                  >
+                    Log out
+                  </Button>
+                </Flex>
+              </Flex>
+            </PopoverBody>
+          </Box>
+        ) : (
+          <Box borderRadius={"20px"} overflow="hidden">
+            <PopoverBody
+              bg={colorMode === "light" ? "rgb(255,254,254)" : "rgb(39,39,38)"}
+            >
+              <Flex
+                // flexDir={"column"}
+                // gap={4}
+                p={2}
+                w={{ base: 10, md: "full" }}
+                // height="50px"
+                mt={"auto"}
+                justifyContent={{ base: "flex-start", md: "flex-start" }}
+              >
+                <Flex
+                  justifyContent="space-between"
+                  //  _hover={{ bg: "whiteAlpha.400" }}
+                  alignItems="center"
+                  width="100%"
+                  paddingBottom={"15px"}
+                  direction={"column"}
+                >
                   <Flex
-                    paddingLeft={"16px"}
-                    _hover={{ bg: "whiteAlpha.400" }}
-                    borderRadius={6}
-                    justifyContent="flex-start"
                     alignItems="center"
-                    width="110%"
-                    height="50px"
-                    marginLeft="-5%"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      toggleSwitchAppearance(true);
+                    justifyContent="space-between"
+                    width="100%"
+                    p={1}
+                    pb={4}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      toggleSwitchAppearance(false);
                     }}
                   >
-                    {colorMode === "light" ?  <LuSunMedium size={25} strokeWidth="1.5" /> : <FiMoon  size={25}  strokeWidth="1.5"  style ={{transform: 'rotate(-90deg)' }}/>}
-                    
-                    <Button
-                      display={{ base: "none", md: "block" }}
-                      variant={"ghost"}
-                      _hover={{ bg: "transparent" }}
-                      fontWeight={"5"}
-                    >
+                    <IoIosArrowBack />
+                    <Text textAlign="center" flexGrow={1}>
                       Switch appearance
-                    </Button>
+                    </Text>
+                    {colorMode === "light" ? (
+                      <LuSunMedium size={25} strokeWidth="1.5" />
+                    ) : (
+                      <FiMoon
+                        size={25}
+                        strokeWidth="1.5"
+                        style={{ transform: "rotate(-90deg)" }}
+                      />
+                    )}
                   </Flex>
-                  <Divider borderWidth={'6px'} width={'116%'} marginLeft={'-10%'}/>
+                  <Divider orientation="horizontal" w={"120%"} />
+
                   <Flex
-                    _hover={{ bg: "whiteAlpha.400" }}
-                    borderRadius={6}
-                    justifyContent="flex-start"
-                    alignItems="center"
-                    width="110%"
-                    height="50px"
-                    marginLeft="-5%"
-                    onClick={handleLogout}
+                    pt={3}
+                    alignItems={"center"}
+                    justifyContent={"space-between"}
+                    w={"100%"}
                   >
-                    <Button
-                      display={{ base: "none", md: "block" }}
-                      variant={"ghost"}
-                      _hover={{ bg: "transparent" }}
-                      isLoading={isLoggingOut}
-                      fontWeight={"5"}
-                    >
-                      Log out
-                    </Button>
+                    <Text flex={1}>Dark mode</Text>
+                    <CustomSwitch
+                      toggleColorMode={toggleColorMode}
+                      colorMode={colorMode}
+                    />
+                    {/* <CustomSwitch  toggleColorMode={toggleColorMode}/>
+                     */}
                   </Flex>
                 </Flex>
-              </PopoverBody>
-            </Box>
-          ) : (
-            <Box borderRadius={"20px"} overflow="hidden">
-              <PopoverBody
-                bg={
-                  colorMode === "light" ? "rgb(255,254,254)" : "rgb(39,39,38)"
-                }
-              >
-                <Flex
-                  // flexDir={"column"}
-                  // gap={4}
-                  p={2}
-                  w={{ base: 10, md: "full" }}
-                  // height="50px"
-                  mt={"auto"}
-                  justifyContent={{ base: "flex-start", md: "flex-start" }}
-                >
-                  <Flex
-                    justifyContent="space-between"
-                    //  _hover={{ bg: "whiteAlpha.400" }}
-                    alignItems="center"
-                    width="100%"
-                    paddingBottom={"15px"}
-                    direction={"column"}
-                   
-                  >
-                    <Flex
-                      alignItems="center"
-                      justifyContent="space-between"
-                      width="100%"
-                      p={1}
-                      pb={4}
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        toggleSwitchAppearance(false);
-                      }}
-                    >
-                      <IoIosArrowBack  />
-                      <Text textAlign="center" flexGrow={1}>
-                        Switch appearance
-                      </Text>
-                      {colorMode === "light" ?  <LuSunMedium size={25} strokeWidth="1.5" /> : <FiMoon  size={25}  strokeWidth="1.5"  style ={{transform: 'rotate(-90deg)' }}/>}
-                    
-                    </Flex>
-                    <Divider orientation="horizontal" w={"120%"} />
-
-                    <Flex pt={3} alignItems={"center"} justifyContent={'space-between'} w={'100%'}>
-                      <Text flex={1}>Dark mode</Text>
-                      <CustomSwitch 
-                        toggleColorMode={toggleColorMode}
-                        />
-                      {/* <CustomSwitch  toggleColorMode={toggleColorMode}/>
-                       */}
-
-                    </Flex>
-                  </Flex>
-                </Flex>
-              </PopoverBody>
-            </Box>
-          )}
-        </PopoverContent>
-      </Popover>
-    )
-}
+              </Flex>
+            </PopoverBody>
+          </Box>
+        )}
+      </PopoverContent>
+    </Popover>
+  );
+};
 
 export default More;

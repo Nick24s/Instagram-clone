@@ -22,13 +22,14 @@ const PostHeader = ({ post, creatorProfile }) => {
       w={"full"}
       my={2}
     >
-      <Flex alignItems={"center"} gap={2}>
+      <Flex alignItems={"center"} gap={2} > 
         {creatorProfile ? (
-          <Link to={`/${creatorProfile.username}`}>
+          <Link to={`/${creatorProfile.username}`} >
             <Avatar
               src={creatorProfile.profilePicURL}
               alt="user profile pic"
               size={"sm"}
+              
             />
           </Link>
         ) : (

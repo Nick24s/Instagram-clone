@@ -27,8 +27,6 @@ const theme = extendTheme({ config,
   })
 
 
-console.log("theme :" ,theme);
-
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>

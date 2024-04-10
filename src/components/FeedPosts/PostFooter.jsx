@@ -60,14 +60,15 @@ const PostFooter = ({ post,  isProfilePage, creatorProfile }) => {
       )}
 
       {authUser && (
-        <Flex
+        <Flex 
           alignItems={"center"}
           gap={2}
           justifyContent={"space-between"}
           w={"full"}
         >
-          <InputGroup>
+          <InputGroup >
             <Input
+            zIndex={10}
               variant={"flushed"}
               placeholder={"Add a comment.."}
               fontSize={14}

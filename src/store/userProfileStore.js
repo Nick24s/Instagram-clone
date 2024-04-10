@@ -17,4 +17,4 @@ const useUserProfileStore = create((set) => ({
     }))
 }))
 
-export default useUserProfileStore
+export default useUserProfileStore;

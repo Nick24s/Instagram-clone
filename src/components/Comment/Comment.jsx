@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 import { timeAgo } from "../../utils/timeAgo";
 const Comment = ({ comment }) => {
   const { userProfile, isLoading } = useGetUserProfileById(comment.createdBy);
-
+  // fix key for every comment
   if (isLoading) return <CommentSkeleton />;
   return (
-    <Flex gap={4}>
+    <Flex gap={4}  >
       <Link to={`/${userProfile.username}`}>
         <Avatar src={userProfile.profilePicURL} size={"sm"} />
       </Link>
@@ -20,7 +20,7 @@ const Comment = ({ comment }) => {
           </Link>
           <Text fontSize={14}>{comment.comment}</Text>
         </Flex>
-        <Text fontSize={12} color={"gray"}>
+        <Text fontSize={12} color={"gray"}   >
          {timeAgo(comment.createdAt)}
         </Text>
       </Flex>

@@ -41,7 +41,7 @@ const NoPostsFound = () => {
     <Flex flexDir={'column'} textAlign={'center'} mx={'auto'} mt={59} justifyContent={'center'} alignItems={'center'} gap={5} > 
       <Box borderRadius={'50px'} border={'3px solid gray'} p={3}>
       
-      <CiCamera size={50} color="gray" border/>
+      <CiCamera size={50} color="gray"/>  {/* border */}
       </Box>
       <Text fontSize={'30px'}  fontWeight={'bold'}>No Posts Yet</Text>
     </Flex>

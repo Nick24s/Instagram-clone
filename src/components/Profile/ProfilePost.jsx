@@ -61,7 +61,7 @@ const ProfilePost = ({ post }) => {
       setIsDeleting(false);
     }
   };
-
+  // TODO IF POST IS OPEN,  CLOSE SEARCH SLIDE
   return (
     <>
       <GridItem
@@ -183,8 +183,10 @@ const ProfilePost = ({ post }) => {
                   overflowY={"auto"}
                 >
                   {post.comments.map((comment) => (
+                    
                     <Comment key={comment.id} comment={comment} />
                   ))}
+                 
                 </VStack>
                 <Divider my={4} bg={"gray.800"} />
                 <PostFooter isProfilePage={true} post={post}/>

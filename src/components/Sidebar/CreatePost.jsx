@@ -35,9 +35,10 @@ import {
 import { firestore, storage } from "../../firebase/firebase";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 
-const CreatePost = ({colorMode}) => {
+const CreatePost = ({colorMode , isOpenSearch}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [caption, setCaption] = useState("");
+  const [isHovered, setIsHovered] = useState(false);
   const imageRef = useRef(null);
   const { handleImageChange, selectedFile, setSelectedFile } = usePreviewImg();
   const showToast = useShowToast();
@@ -53,7 +54,7 @@ const CreatePost = ({colorMode}) => {
       showToast("Error", error.message, "error");
     }
   };
-
+          
   return (
     <>
       <Tooltip
@@ -64,19 +65,26 @@ const CreatePost = ({colorMode}) => {
         openDelay={500}
         display={{ base: "block", md: "none" }}
       >
-        <Flex
+        <Flex zIndex={11}
           alignItems={"center"}
           gap={4}
         _hover={{  bg: colorMode === "light" ? "rgba(0, 0, 0, .05)" : "whiteAlpha.400"}}
           borderRadius={6}
           p={3}
-          w={{ base: 10, md: "full" }}
+          // w={{ base: 10, md: "full" }}
+          w={{ base: 10, md: isOpenSearch ? '48px' : "full" }}
           justifyContent={{ base: "center", md: "flex-start" }}
           marginY={'2px'}
           onClick={onOpen}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
         >
-          <CreatePostLogo colorMode={colorMode}/>
-          <Box display={{ base: "none", md: "block" }}>Create</Box>
+           <Box height={"24px"} width={"24px"}>
+          <CreatePostLogo colorMode={colorMode} isHovered={isHovered}/>
+           </Box>
+          {/* <CiSquarePlus  size={25}/> */}
+
+          <Box display={{ base: "none", md: isOpenSearch ? 'none' : "block" }}>Create</Box>
         </Flex>
       </Tooltip>
 
